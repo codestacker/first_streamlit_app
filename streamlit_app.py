@@ -1,10 +1,6 @@
 import streamlit
 import pandas as pd
 import requests
-
-charset-normalizer==2.0.0
-cffi==1.15.0 
-pyarrow==6.0.1
 import snowflake.connector
 
 streamlit.title('My Parents New Healthy Dinner')
