@@ -70,12 +70,20 @@ def add_to_fruit_load_list(new_fruit):
     return "Thanks for adding " + new_fruit
 
 streamlit.header("Want to add fruit to the list?")
-add_my_fruit = streamlit.text_input('What fruit would you like to add?','jackfruit')
-#add button to insert data
-if streamlit.button('Insert to Fruit Load List'):
-  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-  back_from_function = add_to_fruit_load_list(add_my_fruit)
-  my_data_row = get_fruit_load_list()
-  my_cnx.close()
-  streamlit.text(back_from_function)
-  streamlit.text(my_data_row)
+try:
+  add_my_fruit = streamlit.text_input('What fruit would you like to add?','jackfruit')
+  if not add_my_fruit:
+    streamlit.error("Please select a fruit to add to your favoutites.")
+  else:
+    streamlit.write('The user entered ', add_my_fruit)
+    #add button to insert data
+    if streamlit.button('Insert to Fruit Load List'):
+      my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+      back_from_function = add_to_fruit_load_list(add_my_fruit)
+      my_data_row = get_fruit_load_list()
+      my_cnx.close()
+      streamlit.text(back_from_function)
+      streamlit.text(my_data_row)
+
+except URLError as e:
+  streamlit.error()
