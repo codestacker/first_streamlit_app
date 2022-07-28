@@ -36,22 +36,14 @@ fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 # output the table
 streamlit.dataframe(fruityvice_normalized)
 
-streamlit.header("Fruityvice Fruit Advice!")
+streamlit.header("Want to add fruit to the list")
 
-fruit_choice_1 = streamlit.text_input('What fruit would you like information about?','Jackfruit')
-streamlit.write('The user entered ', fruit_choice_1)
-
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice_1)
-#streamlit.text(fruityvice_response.json())
-
-# json version of the response and normalize it
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-
-# output the table
-streamlit.dataframe(fruityvice_normalized)
+add_my_fruit = streamlit.text_input('What fruit would you like to add?','jackfruit')
+streamlit.write('Thanks for adding ', add_my_fruit)
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
+my_cur.execute("Insert into fruit_load_list values (add_my_fruit)")
 my_cur.execute("SELECT * from fruit_load_list")
 my_data_row = my_cur.fetchall()
 streamlit.header("The fruit load list contains:")
