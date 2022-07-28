@@ -71,7 +71,7 @@ def add_to_fruit_load_list(new_fruit):
 
 streamlit.header("Want to add fruit to the list?")
 try:
-  add_my_fruit = streamlit.text_input('What fruit would you like to add?','jackfruit')
+  add_my_fruit = streamlit.text_input('What fruit would you like to add?')
   if not add_my_fruit:
     streamlit.error("Please select a fruit to add to your favoutites.")
   else:
